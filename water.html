@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Contamination Reporting</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #E0F7FA; /* Aqua Sky */
+            color: #005B5F;
+        }
+        header {
+            background: #007C91; /* Deep Aqua */
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        nav {
+            text-align: center;
+            background: #0097A7;
+            padding: 10px;
+        }
+        nav button {
+            padding: 12px;
+            margin: 5px;
+            border: none;
+            background: #00ACC1; /* Lighter Aqua */
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        section {
+            display: none;
+            padding: 20px;
+            background: white;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 10px gray;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .active {
+            display: block;
+        }
+        input, button, textarea {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px;
+            border: 1px solid #0097A7;
+            border-radius: 5px;
+        }
+        button {
+            background: #007C91;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid #007C91;
+            padding: 8px;
+        }
+        .info-box {
+            display: flex;
+            align-items: center;
+            background: #B2EBF2; /* Light Aqua */
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .info-box img {
+            width: 60px;
+            margin-right: 15px;
+        }
+        .water-facts {
+            background: #80DEEA;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 2px 2px 10px gray;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        🌊 Water Contamination & Scarcity Awareness
+    </header>
+
+    <nav>
+        <button onclick="showSection('report')">📍 Report Contamination</button>
+        <button onclick="showSection('dashboard')">📊 View Reports</button>
+        <button onclick="showSection('safety')">💧 Water & Sanitation Safety</button>
+        <button onclick="showSection('scarcity')">🌍 Water Scarcity Facts</button>
+    </nav>
+
+    <section id="report" class="active">
+        <h2>📍 Report Contaminated Water</h2>
+        <form id="reportForm">
+            <label>Location (Auto-Filled):</label>
+            <input type="text" id="location" readonly>
+
+            <label>Describe the Issue:</label>
+            <textarea id="description" required></textarea>
+
+            <label>Upload Photo/Video:</label>
+            <input type="file" id="media" accept="image/*,video/*">
+
+            <button type="submit">🚀 Submit Report</button>
+        </form>
+    </section>
+
+    <section id="dashboard">
+        <h2>📊 Community Reports</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>📍 Location</th>
+                    <th>⚠️ Issue</th>
+                    <th>🖼 Media</th>
+                    <th>🛠 Response</th>
+                </tr>
+            </thead>
+            <tbody id="reportList">
+            </tbody>
+        </table>
+    </section>
+
+    <section id="safety">
+        <h2>💧 Water & Sanitation Safety Measures</h2>
+
+        <div class="info-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/2995/2995460.png" alt="Clean Water">
+            <p><b>Always drink clean water:</b> Boil or use a purifier to remove contaminants.</p>
+        </div>
+
+        <div class="info-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/2920/2920269.png" alt="Hand Wash">
+            <p><b>Practice good hygiene:</b> Wash hands with soap before eating and after using the toilet.</p>
+        </div>
+
+        <div class="info-box">
+            <img src="https://cdn-icons-png.flaticon.com/512/2913/2913601.png" alt="Garbage">
+            <p><b>Proper waste disposal:</b> Avoid dumping garbage near water sources to prevent contamination.</p>
+        </div>
+
+    </section>
+
+    <section id="scarcity">
+        <h2>🌍 Water Scarcity Facts</h2>
+
+        <div class="water-facts">
+            💧 <b>1 in 3 people worldwide</b> lack access to safe drinking water.
+        </div>
+        <div class="water-facts">
+            🚰 <b>By 2025</b>, half of the world's population will be living in water-stressed areas.
+        </div>
+        <div class="water-facts">
+            🏜 <b>Climate change</b> is making water shortages worse, affecting billions.
+        </div>
+        <div class="water-facts">
+            🚱 <b>Unsafe water</b> causes 1.2 million deaths each year due to waterborne diseases.
+        </div>
+    </section>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll("section").forEach(section => {
+                section.classList.remove("active");
+            });
+            document.getElementById(sectionId).classList.add("active");
+        }
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    document.getElementById("location").value = 
+                        `Lat: ${position.coords.latitude}, Lng: ${position.coords.longitude}`;
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        getLocation();
+
+        document.getElementById("reportForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const location = document.getElementById("location").value;
+            const description = document.getElementById("description").value;
+            const mediaInput = document.getElementById("media").files[0];
+            const response = "Pending";
+
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td>${location}</td>
+                <td>${description}</td>
+                <td>${mediaInput ? mediaInput.name : "No Media"}</td>
+                <td>${response}</td>
+            `;
+
+            document.getElementById("reportList").appendChild(newRow);
+
+            document.getElementById("reportForm").reset();
+            alert("Report submitted successfully!");
+        });
+    </script>
+
+</body>
+</html>
